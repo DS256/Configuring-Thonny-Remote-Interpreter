@@ -47,16 +47,23 @@ $ ls -lh /usr/bin/python3.9
 What all this means is that you can take the default of `/usr/bin/python` in Thonny. If you have a mix of different versions, you will likely have to select the real executable interpreter. In this case it would be `/usr/bin/python3.9`.
 
 ## Verify PIP
-Next check to make sure PIP is installed
+You will need PIP for the next step of installing JEDI. If you are using a fresh Bullseye OS install, PIP is not installed. I'll explain a bit based on my own experiences. 
+One has to be carefull about both installing PIP and running PIP. For example, running `pip` versus `sudo pip` will install the Python package in different directories. The former is for the users own use; the latter system wide. You need to be consistant. The approach I'm taking here is to install PIP for the local users use.
+
+First check to see if PIP is installed
 ```
 $ python3 -m pip --version
 /usr/bin/python3: No module named pip
 ```
 If you get the above message, install PIP
+
+### SUDO APT INSTALL PYTHON3-PIP (NOT RECOMMENDED)
+
+There are many install guides for PIP. One I found was [How to install pip on the Raspberry Pi](https://pimylifeup.com/raspberry-pi-pip/). A site where I get a lot of good information from but they seem to take the approach of installing packages for the system as opposed to the user. This can create problems when different Python scripts require different versions of the same package. This problem is overcome with Python Virtual Environments and one of the reasons I chose to install PIP in the local user.
 ```
 $ sudo apt install python3-pip
 ```
-After this you should get a message like this
+After this you can test the install
 ```
 $ python -m pip --version
 pip 20.3.4 from /usr/lib/python3/dist-packages/pip (python 3.9)
@@ -64,6 +71,39 @@ pip 20.3.4 from /usr/lib/python3/dist-packages/pip (python 3.9)
 $ pip --version
 pip 24.0 from /home/paul/.local/lib/python3.9/site-packages/pip (python 3.9)
 ```
+So, you can see the issue here. There is a differences in version and the directory structure they are working in.
+
+### SUPPORTED METHODS TO INSTALL PIP
+I'm using [Installing PIP](https://pip.pypa.io/en/stable/installation/) which lists the supported methods for installing PIP from the [PIP Documentation V24](https://pip.pypa.io/en/stable/). The method I chose to use was to download ```get-pip.py`` since I did not do a fresh Python install. I open the URL then saved the page to `get-pip.py`
+```
+$ ls -hl
+total 2.6M
+-rw-r--r-- 1 paul paul   11 Mar  2 10:26 date_new_install.txt
+-rw-r--r-- 1 paul paul 2.6M Mar  2 16:46 get-pip.py
+$
+```
+Running the install
+```
+$ python get-pip.py
+Defaulting to user installation because normal site-packages is not writeable
+Looking in indexes: https://pypi.org/simple, https://www.piwheels.org/simple
+Collecting pip
+  Downloading https://www.piwheels.org/simple/pip/pip-24.0-py3-none-any.whl (2.1 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 553.2 kB/s eta 0:00:00
+Installing collected packages: pip
+Successfully installed pip-24.0
+$
+```
+Verifying the install
+```
+$ python -m pip --version
+pip 24.0 from /home/paul/.local/lib/python3.9/site-packages/pip (python 3.9)
+paul@piZERO:~ $ pip --version
+pip 24.0 from /home/paul/.local/lib/python3.9/site-packages/pip (python 3.9)
+$
+```
+We now have a consistant PIP installation.
+
 ## Install the JEDI Python Package
 Thonny remote requires the [JEDI package](https://jedi.readthedocs.io/en/latest/). To ensure you have it, run the following
 ```
@@ -80,13 +120,13 @@ On the remote host (not ZERO) start Thonny
 In Python, select Tools-> Options-> Interpreters. Enter the information need to configure the connection:
 - From the pull down, select 'Remote Python 3 (SSH)'
 - Enter the host name either as a name or IP address
-- Select (SSH) authentication. In this example 'password' is used. You will be asked for the password on the next screen
+- Select user password (SSH) authentication. In this example 'password' is used. You will be asked for the password on the next screen
 - Interpreter. Use the directory use discovered above in Verify Python.
 - Leave the 'shebang scripts' default checked.
 
 ![Screenshot from 2024-03-01 16-56-37](https://github.com/DS256/Configuring-Thonny-Remote-Interpreter/assets/32932990/e1bd2de3-e64d-4f05-91be-906495d611b0)
 
-You will next be prompted for the ZERO SSH password which can be saved for future accesses
+You will next be prompted for the ZERO user password which can be saved for future accesses
 
 ![Screenshot from 2024-03-01 16-58-32](https://github.com/DS256/Configuring-Thonny-Remote-Interpreter/assets/32932990/60aabeb7-c0b9-4da1-8974-0ec9a49f92fd)
 
