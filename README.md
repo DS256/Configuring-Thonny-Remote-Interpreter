@@ -1,7 +1,9 @@
 # Configuring-Thonny-Remote-Interpreter
 How to configure Thonny on one platform to program on a remote platform. For example, using Thonny on Windows to program Python on a Raspberry PI Zero.
 
-There are Raspberry PI's not suitable to run a GUI that would support local Thonny. Examples are Raspberry PI PICO and Raspberry PI Zero W. Thonny can be configured as the program development IDE to these platforms from a separate host. This article describes how to set this up.
+There are Raspberry PI's not suitable to run a GUI that would support local Thonny. Examples are Raspberry PI PICO and Raspberry PI Zero W. Thonny can be configured as the program development IDE to these platforms from a separate host. This article describes how to set this up
+
+> NOTE: At the present time Thonny does not support debugging of code over Remote SSH.
 
 At the moment, this article does address how to do the following:
 
