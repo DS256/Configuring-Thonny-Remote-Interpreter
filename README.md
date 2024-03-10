@@ -1,6 +1,7 @@
 # Configuring-Thonny-Remote-Interpreter
 How to configure Thonny on one platform to program on a remote platform. For example, using Thonny on Windows to program Python on a Raspberry PI Zero.
 
+## Background
 There are Raspberry PI's not suitable to run a GUI that would support local Thonny. Examples are Raspberry PI PICO and Raspberry PI Zero W. Thonny can be configured as the program development IDE to these platforms from a separate host. This article describes how to set this up
 
 > NOTE: At the present time Thonny does not support debugging of code over Remote SSH.
@@ -16,6 +17,17 @@ The following assumes the following:
 - Wi-Fi and SSH has been enabled and are working
 - There is a username and password to use. This is normally the development account.
 - We are not trying to install/run remote access to a Virtual Environment (VENV). This seems to be a requirement for Bullseye but as far as I know, Bullseye is not available for the ZERO yet. VENV is a good idea and I may come back to address it hear since Thonny supports it.
+
+## Version of Thonny to Use
+The P400 Raspberry PI Bullseye came with Thonny 4.0.2 installed. On the [Thonny](https://thonny.org/) home page, the latest release is 4.1.4. If you hover over the 'Download version 4.1.4 ..' panel, a popup window shows that for Debian and Raspberry PI you should use `sudo apt install thonny`. When I did this, Thonny 4.0.1, an older version was installed which I removed.
+
+I found that the 4.0.2 version I was running was installed locally at ~/apps/thonny.
+
+On the [Thonny install page](https://github.com/thonny/thonny/releases/tag/v4.1.4) it says to run `thonny-4.1.4.bash`. This script seems to install Thonny into ~/apps/thonny as well. I have not had the nerve to try installing 4.1.4 using the BASH script yet until I can confirm I can restore 4.0.2 if needed.
+
+On the [Introduction to Raspberry Pi Pico guide](https://projects.raspberrypi.org/en/projects/introduction-to-the-pico/2) it says Thonny is already installed but to update it, run `sudo apt update && sudo apt upgrade -y` which does down update the version.
+
+I mention all of this because in Thonny 4.1.0 they fixed "Fix remote Python 3 (SSH) connection error" which I have run into. So if you run into problems with an older version, you may wish to consider upgrading.
 
 ## Log into the ZERO W from the Remote Host
 The ZERO has to be first configured to accept the Thonny connection from the remote host
